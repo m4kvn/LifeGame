@@ -3,92 +3,152 @@ package com.masahirosaito.`fun`.lifegame
 import processing.core.PApplet
 import processing.core.PConstants
 
+/**
+ * LifeGame Processing Applet
+ *
+ * @property windowSize ウィンドウのサイズ
+ * @property blockSize ブロックのサイズ
+ * @property lineBlockNum 一辺のブロック数
+ * @property isStart ライブゲームがスタートされているかどうか
+ * @property blocks 全てのブロックを格納した配列
+ * @constructor ライフゲームを生成する
+ */
 class LifeGame : PApplet() {
     val windowSize = 500
     val blockSize = 10
-    val n = windowSize / blockSize
-    var start = false
+    val lineBlockNum = windowSize / blockSize
+    var isStart = false
 
-    val blocks = Array(n, { x ->
-        Array(n, { y ->
+    val blocks = Array(lineBlockNum, { x ->
+        Array(lineBlockNum, { y ->
             Block(this, x, y, blockSize.toFloat())
         })
     })
 
+    /**
+     * 初期設定
+     *
+     * 1. ゲームのフレームレートを10に設定
+     * 2. ウィンドウのサイズを設定
+     * 3. 背景を黒に設定
+     * 4. 線の太さを50設定
+     * 5. 全てのブロックに隣接するブロックを設定する
+     */
     override fun setup() {
         frameRate(10f)
         size(windowSize, windowSize)
         background(0)
         stroke(50)
 
-        blocks.forEach { it.forEach { block -> setRelativeBlocks(block) } }
+        setRelativeBlocks()
     }
 
+    /**
+     * 描画処理
+     *
+     * 1. 背景を黒で塗りつぶす
+     * 2. ゲームが開始している場合は、全てのブロックの次の世代を計算
+     * 3. ゲームが開始している場合は、全てのブロックの次の世代を変更
+     * 4. 全てのブロックを描画する
+     */
     override fun draw() {
         background(0)
 
-        if (start) {
+        if (isStart) {
             nextPreGeneration()
-            blocks.forEach { it.forEach(Block::nextGeneration) }
+            nextGeneration()
         }
 
+        drawBlocks()
+    }
+
+    /**
+     * 全てのブロックを描画する
+     */
+    fun drawBlocks() {
         blocks.forEach { it.forEach(Block::draw) }
     }
 
+    /**
+     * キーを押した時の処理
+     *
+     * s が押された場合は、ゲームを開始する
+     * p が押された場合は、ゲームを一時停止する
+     * r が押された場合は、ゲームをリセットする
+     */
     override fun keyPressed() {
         when (key) {
             's' -> startLifeGame()
             'p' -> pauseLifeGame()
-            'n' -> nextPreGeneration()
             'r' -> reset()
         }
     }
 
+    /**
+     * マウスをクリックした時の処理
+     *
+     * 左クリックは、ブロックを誕生させる
+     * 右クリックは、ブロックを死亡させる
+     */
     override fun mouseClicked() {
-        val x = mouseX / blockSize
-        val y = mouseY / blockSize
-
-        when (mouseButton) {
-            PConstants.LEFT -> blocks[x][y].isAlive = true
-            PConstants.RIGHT -> blocks[x][y].isAlive = false
-        }
-
-        println(blocks[x][y].getRelativesAliveNum())
+        beAlive(mouseX / blockSize, mouseY / blockSize)
     }
 
+    /**
+     * マウスをドラッグした時の処理
+     *
+     * ドラッグした場所のブロックを誕生させる
+     */
     override fun mouseDragged() {
-        val x = mouseX / blockSize
-        val y = mouseY / blockSize
-
-        when (mouseButton) {
-            PConstants.LEFT -> blocks[x][y].isAlive = true
-            PConstants.RIGHT -> blocks[x][y].isAlive = false
-        }
+        beAlive(mouseX / blockSize, mouseY / blockSize)
     }
 
-    fun startLifeGame() { start = true }
+    /**
+     * ゲームを開始する
+     */
+    fun startLifeGame() { isStart = true }
 
-    fun pauseLifeGame() { start = false }
+    /**
+     * ゲームを一時停止する
+     */
+    fun pauseLifeGame() { isStart = false }
 
-    fun setRelativeBlocks(block: Block) {
-        val x = block.x
-        val y = block.y
-
-        for (i in x-1..x+1) for (j in y-1..y+1) {
-            when {
-                i == x && j == y -> {}
-                i < 0 || n <= i -> {}
-                j < 0 || n <= j -> {}
-                else -> block.relatives.add(blocks[i][j])
-            }
-        }
+    /**
+     * ゲームをリセットする
+     */
+    fun reset() {
+        blocks.forEach { it.forEach(Block::reset) }
+        isStart = false
     }
 
+    /**
+     * 全てのブロックに隣接するブロックを設定する
+     */
+    fun setRelativeBlocks() {
+        blocks.forEach { it.forEach { it.setRelativeBlocks(blocks, lineBlockNum) } }
+    }
+
+    /**
+     * 全てのブロックの次の世代を計算する
+     */
     fun nextPreGeneration() {
         blocks.forEach { it.forEach(Block::nextPreGeneration) }
     }
 
-    fun reset() {
-        blocks.forEach { it.forEach(Block::reset) }
+    /**
+     * 全てのブロックの次の世代を設定する
+     */
+    fun nextGeneration() {
+        blocks.forEach { it.forEach(Block::nextGeneration) }
+    }
+
+    /**
+     * ブロックを誕生・死亡させる
+     *
+     * @param x ブロックのx座標
+     * @param y ブロックのy座標
+     */
+    fun beAlive(x: Int, y: Int) {
+        blocks[x][y].isAlive = mouseButton == PConstants.LEFT
     }
 }
