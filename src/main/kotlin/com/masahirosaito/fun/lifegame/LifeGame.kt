@@ -70,21 +70,6 @@ class LifeGame : PApplet() {
     }
 
     /**
-     * キーを押した時の処理
-     *
-     * s が押された場合は、ゲームを開始する
-     * p が押された場合は、ゲームを一時停止する
-     * r が押された場合は、ゲームをリセットする
-     */
-    override fun keyPressed() {
-        when (key) {
-            's' -> startLifeGame()
-            'p' -> pauseLifeGame()
-            'r' -> reset()
-        }
-    }
-
-    /**
      * マウスをクリックした時の処理
      *
      * 左クリックは、ブロックを誕生させる
@@ -149,6 +134,8 @@ class LifeGame : PApplet() {
      * @param y ブロックのy座標
      */
     fun beAlive(x: Int, y: Int) {
+        if (x < 0 || lineBlockNum <= x) return
+        if (y < 0 || lineBlockNum <= y) return
         blocks[x][y].isAlive = mouseButton == PConstants.LEFT
     }
 }
