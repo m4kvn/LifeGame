@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="LifeGame:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/LifeGame_jar</output-path>
+    <root id="archive" name="LifeGame.jar">
+      <element id="module-output" name="LifeGame_main" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.0.6/d19acb6ed49b9c48228c0e5dff8071fce23be4b8/kotlin-stdlib-1.0.6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.processing/core/2.2.1/7ed248f472ac886d20ed74bd4c409ca07ae5a25e/core-2.2.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-runtime/1.0.6/3562c66f648480d3bd4f76cff722488ced13445b/kotlin-runtime-1.0.6.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

@@ -1,6 +1,3 @@
-group 'com.MasahiroSaito.FUN'
-version '1.0-SNAPSHOT'
-
 buildscript {
     ext.kotlin_version = '1.0.6'
 
@@ -11,6 +8,13 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
+
+plugins {
+    id "us.kirchmeier.capsule" version "1.0.2"
+}
+
+group 'com.MasahiroSaito.FUN'
+version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
 apply plugin: 'kotlin'
@@ -24,4 +28,18 @@ repositories {
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile group: 'org.processing', name: 'core', version: '2.2.1'
+}
+
+apply plugin: 'application'
+
+mainClassName = 'com.masahirosaito.fun.lifegame.MainKt'
+
+task fatCapsule(type: FatCapsule) {
+    applicationClass mainClassName
+}
+
+task executableCapsule(type: FatCapsule) {
+    applicationClass mainClassName
+    reallyExecutable
+    archiveName = "LifeGame"
 }

@@ -8,9 +8,10 @@ import javax.swing.JPanel
 /**
  * LifeGameを操作するフレーム
  *
- * ゲームの開始・一時停止・初期化を行う
+ * ゲームの開始・一時停止・初期化を行うことができるフレームを作成する
  *
  * @property pApplet LifeGame PApplet
+ * @constructor JFrameの設定を行う
  */
 class ControlFrame : JFrame() {
     val pApplet = LifeGame()
