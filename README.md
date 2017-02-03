@@ -1,6 +1,8 @@
 # LifeGame
 
-![](https://www.evernote.com/l/As2q2r6usLNOEo1P-oSG5n0HZwGKwks74WYB/image.png)
+| 直線 | 十字 |
+| :--: | :--: |
+| ![](https://media.giphy.com/media/l0Exf8HbOdMMNztW8/giphy.gif) | ![](https://media.giphy.com/media/26gsvsjU1pV8DHHXO/giphy.gif) |
 
 ## ライフゲームに関する説明
 
@@ -19,7 +21,10 @@
 
 ## 自分で興味を持った初期パターンとその変化についての説明
 
-![](https://www.evernote.com/l/As2v0zb4ws5Japs3LCQBsWmiUybfm2i8Mh4B/image.png)
+| グライダー | グライダー銃 |
+| :--------: | :----------: |
+| ![](https://www.evernote.com/l/As0kY68umttINYpNQra2UPKpo_psLMJsM6kB/image.png) | ![](https://www.evernote.com/l/As2v0zb4ws5Japs3LCQBsWmiCZ0lvga0sOwB/image.png) |
+| 斜めの方向に移動する | 30世代毎にグライダーを打ち出す |
 
 ## プログラム作成上工夫した点
 
